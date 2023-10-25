@@ -4,4 +4,4 @@ metadata:
   name: kpt-test
   namespace: default
 data:
-  k1: v1
+  k1: v2
