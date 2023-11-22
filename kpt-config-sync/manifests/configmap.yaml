@@ -6,4 +6,4 @@ metadata:
   annotations:
     argocd.argoproj.io/tracking-id: my-app3:apps/ConfigMap:default/kpt-test
 data:
-  k1: v4
+  k1: v5
