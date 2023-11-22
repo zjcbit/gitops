@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kpt-test
+  namespace: default
+  annotations:
+    argocd.argoproj.io/tracking-id: my-app3:apps/ConfigMap:default/kpt-test
+data:
+  k1: v4
