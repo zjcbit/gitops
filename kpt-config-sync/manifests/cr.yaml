@@ -7,7 +7,7 @@ metadata:
     metadata.alibabacloud.com/risk-grade: low    #风险级别
     argocd.argoproj.io/tracking-id: myapp3:tekton.dev/Pipeline:ark-system/backup-xdb-op
   labels:
-    app.kubernetes.io/version: "4.0"
+    app.kubernetes.io/version: "5.0"
   name: backup-xdb-op
   namespace: ark-system
 spec:
