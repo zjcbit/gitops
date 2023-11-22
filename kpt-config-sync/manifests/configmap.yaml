@@ -4,6 +4,6 @@ metadata:
   name: kpt-test
   namespace: default
   annotations:
-    argocd.argoproj.io/tracking-id: my-app:apps/ConfigMap:default/kpt-test
+    argocd.argoproj.io/tracking-id: my-app3:apps/ConfigMap:default/kpt-test
 data:
   k1: v4
