@@ -1,0 +1,44 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  annotations:
+    app.kubernetes.io/enabled: "true"
+    metadata.alibabacloud.com/opsCatalog: '{"zh_CN":{"opsGroup":"备份","opsCatalogName":"备份xdb数据库实例(xdb_op)"},"en_US":{"opsGroup":"backup","opsCatalogName":"backup xdb database instance(xdb_op)"}}'
+    metadata.alibabacloud.com/risk-grade: low    #风险级别
+    argocd.argoproj.io/tracking-id: myapp3:tekton.dev/Pipeline:ark-system/backup-xdb-op
+  labels:
+    app.kubernetes.io/version: "1.0"
+  name: backup-xdb-op
+  namespace: ark-system
+spec:
+  description: xdb 数据库备份, 支持备份单个或多个 xdb 实例数据库
+  params:
+    - name: databases
+      description: 待备份的 xdb 数据库名称列表（英文半角逗号分割），必选，`all` 表示备份所有数据库。
+      type: string
+    - description: 运行本任务以及保存备份文件的 K8S 节点名称, 必选，**当前实现上限制为 K8S Master 节点名称**;
+      name: savedNodeName
+      type: string
+    - description: 保存备份文件的目录，可选，默认为 `/apsarapangu/disk3/xdb_bak_arkpipeline/`;
+      name: savedDir
+      type: string
+      default: "/apsarapangu/disk3/xdb_bak_arkpipeline/"
+    - description: 单个数据库占用存储空间上限，单位 G, 超过时将拒绝备份。
+      name: limitSize
+      type: string
+      default: "20"
+
+  tasks:
+    - name: backup-xdb-op
+      taskRef:
+        kind: Task
+        name: backup-xdb-op
+      params:
+        - name: databases
+          value: "$(params.databases)"
+        - name: savedNodeName
+          value: "$(params.savedNodeName)"
+        - name: savedDir
+          value: "$(params.savedDir)"
+        - name: limitSize
+          value: "$(params.limitSize)"
